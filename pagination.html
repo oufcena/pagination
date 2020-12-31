@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Pagination</h2>
+
+<script>
+function pagination(links, JSX=document.body) {
+  if(!links) {
+    links = [
+      { href: `#`, txt: `&laquo;` },
+      { href: `#`, txt: `1` },
+      { href: `#`, txt: `2` },
+      { href: `#`, txt: `3` },
+      { href: `#`, txt: `4` },
+      { href: `#`, txt: `5` },
+      { href: `#`, txt: `6` },
+      { href: `#`, txt: `&raquo;` }
+    ];
+  }
+
+  var color, CSS, JS, HTML='';
+  
+  color = [
+    `#4CAF50`,
+    `#ddd`,
+    `#fff`,
+    `#000`
+  ];
+  
+  CSS = [
+    `
+      text-align: center;
+    `,
+    `
+      display: inline-block;
+    `,
+    `
+      color: ${color[3]};
+      background: ${color[2]};
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: .3s;
+      border: 1px solid ${color[1]};
+      border-radius: 5px;
+      margin: 0 4px;
+      font-size: 22px;
+    `,
+    `
+      border: 1px solid ${color[0]};
+      background: ${color[0]};
+      color: #fff;
+    `,
+    `
+      color: ${color[2]};
+      background: ${color[3]};
+    `
+  ];
+  
+  JS = [
+    `
+      onmouseover = "
+        this.style.cssText += \`
+          background: ${color[1]};
+        \`;
+      "
+      onmouseout = "
+        this.style.cssText += \`
+          background: ${color[2]};
+        \`;
+      "
+      onclick = "
+        [...this.parentElement.children].forEach((v, i, a) => {
+          if(i==0 || i==a.length-1) {} else {
+            v.style.cssText += \`
+              background: ${color[2]};
+            \`;
+            v.onmouseover = function() {
+              v.style.cssText += \`
+                background: ${color[1]};
+              \`;
+            };
+            v.onmouseout = function() {
+              v.style.cssText += \`
+                background: ${color[2]};
+              \`;
+            };
+          }
+        });
+        this.style.cssText += \`
+          background: ${color[0]};
+        \`;
+        this.onmouseover = '';
+        this.onmouseout = '';
+      "
+    `,
+    `
+      
+    `
+  ];
+  
+  HTML += `
+  <section style="${CSS[0]}">
+    <div style="${CSS[1]}">`;
+  HTML += links.map((v, i, a) => {
+    if(i==0 || i==a.length-1) {
+      return `
+      <a ${JS[1]} style="${CSS[2]+CSS[4]}"
+      href="${v.href}">${v.txt}</a>
+      `;
+    } else {
+      return `
+      <a ${JS[0]} style="${CSS[2]}"
+      href="${v.href}">${v.txt}</a>
+      `;
+    }
+  }).join('');
+  HTML += `
+    </div>
+  </section>
+  `;
+  
+  JSX.innerHTML += HTML;
+} pagination();
+</script>
+
+</body>
+</html>
