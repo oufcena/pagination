@@ -1,3 +1,3 @@
 # pagination
 
-[Preview](https://oufcena.github.io/pagination/)
+[Preview](https://oufcena.github.io/pagination/pagination.html)
